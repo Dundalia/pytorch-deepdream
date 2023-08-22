@@ -1,0 +1,17 @@
+New models: 
+- ViT
+- CLIP
+
+-> modified SupportedModels and fetch_and_prepare_model accordingly
+
+ConstantContext in utils.constants -> modified all the calls to IMAGENET_MEAN etc ..
+
+Added argument in parser: text_prompt only for clip
+
+Changed img_width arg in imfg_dimensions and its calls
+
+Fixing pyramid_size and img_domensions for FIxedImageResolutions models
+
+modified gradient_ascend to take as input also the text in case of CLIP models
+
+Padd and unpad images to do pyramids with FixedImageResolutions models

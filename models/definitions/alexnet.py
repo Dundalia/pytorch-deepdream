@@ -1,11 +1,9 @@
 import os
 from collections import namedtuple
 
-
 import torch
 from torchvision import models
 from torch.hub import download_url_to_file
-
 
 from utils.constants import *
 

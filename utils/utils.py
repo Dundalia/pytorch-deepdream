@@ -15,6 +15,7 @@ from models.definitions.vggs import Vgg16, Vgg16Experimental
 from models.definitions.googlenet import GoogLeNet
 from models.definitions.resnets import ResNet50
 from models.definitions.alexnet import AlexNet
+from models.definitions.clipnets import CLIP
 from .constants import *
 
 
@@ -45,7 +46,7 @@ def load_image(img_path, target_shape=None):
 def pre_process_numpy_img(img):
     assert isinstance(img, np.ndarray), f'Expected numpy image got {type(img)}'
 
-    img = (img - IMAGENET_MEAN_1) / IMAGENET_STD_1  # normalize image
+    img = (img - ConstantsContext.ACTIVE_MEAN) / ConstantsContext.ACTIVE_STD  # normalize image
     return img
 
 
@@ -55,8 +56,8 @@ def post_process_numpy_img(img):
     if img.shape[0] == 3:  # if channel-first format move to channel-last (CHW -> HWC)
         img = np.moveaxis(img, 0, 2)
 
-    mean = IMAGENET_MEAN_1.reshape(1, 1, -1)
-    std = IMAGENET_STD_1.reshape(1, 1, -1)
+    mean = ConstantsContext.ACTIVE_MEAN.reshape(1, 1, -1)
+    std = ConstantsContext.ACTIVE_STD.reshape(1, 1, -1)
     img = (img * std) + mean  # de-normalize
     img = np.clip(img, 0., 1.)  # make sure it's in the [0, 1] range
 
@@ -132,6 +133,26 @@ def fetch_and_prepare_model(model_type, pretrained_weights, device):
         model = ResNet50(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.ALEXNET.name:
         model = AlexNet(pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.VIT.name:
+        model = ViT(pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.CLIPVITB32.name:
+        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "ViT-B/32").to(device)
+    elif model_type == SupportedModels.CLIPVITB16.name:
+        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "ViT-B/16").to(device)
+    elif model_type == SupportedModels.CLIPVITL14.name:
+        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "ViT-L/14").to(device)
+    elif model_type == SupportedModels.CLIPVITL14_336.name:
+        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "ViT-L/14@336px").to(device)
+    elif model_type == SupportedModels.CLIPRN50.name:
+        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN50").to(device)
+    elif model_type == SupportedModels.CLIPRN101.name:
+        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN101").to(device)
+    elif model_type == SupportedModels.CLIPRN50x4.name:
+        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN50x4").to(device)
+    elif model_type == SupportedModels.CLIPRN50x16.name:
+        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN50x16").to(device)
+    elif model_type == SupportedModels.CLIPRN50x64.name:
+        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN50x64").to(device)
     else:
         raise Exception('Model not yet supported.')
     return model
@@ -178,6 +199,48 @@ def get_new_shape(config, base_shape, pyramid_level):
         exit(0)
 
     return new_shape
+
+
+def pad_image_to_shape(img, target_shape):
+    """
+    Pads the input image with its average color so that it matches the target shape.
+    img: Input image (numpy array in the range [0,1] with dtype=float32).
+    target_shape: Desired shape for the output image (height, width).
+    Returns the padded image.
+    """
+    # Calculate the average color of img
+    avg_color = np.mean(img, axis=(0, 1))
+
+    # Create a new image of the desired shape filled with the average color
+    padded_img = np.full((target_shape[0], target_shape[1], img.shape[2]), avg_color, dtype=np.float32)
+
+    # Compute the starting coordinates to place img in the middle of padded_img
+    start_y = (target_shape[0] - img.shape[0]) // 2
+    start_x = (target_shape[1] - img.shape[1]) // 2
+
+    # Place img in the middle of padded_img
+    padded_img[start_y:start_y + img.shape[0], start_x:start_x + img.shape[1]] = img
+
+    return padded_img
+
+
+def extract_original_from_padded(padded_img, original_shape):
+    """
+    Extracts the original image from a padded image.
+    
+    padded_img: Input padded image (numpy array).
+    original_shape: Shape of the original image before it was padded (height, width).
+    
+    Returns the extracted original image.
+    """
+    # Compute the starting coordinates of the original image within the padded image
+    start_y = (padded_img.shape[0] - original_shape[0]) // 2
+    start_x = (padded_img.shape[1] - original_shape[1]) // 2
+
+    # Extract the original image using slicing
+    original_img = padded_img[start_y:start_y + original_shape[0], start_x:start_x + original_shape[1]]
+
+    return original_img
 
 
 def random_circular_spatial_shift(tensor, h_shift, w_shift, should_undo=False):
