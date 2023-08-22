@@ -1,4 +1,4 @@
-from collections import namedtuple
+from collections import namedtuple, defaultdict
 
 import torch
 import open_clip
@@ -30,13 +30,21 @@ class OpenCLIP(torch.nn.Module):
           for param in self.parameters():
             param.requires_grad = False
 
+        # Store the text features in order to compute them once while deepdreaming
+        self.stored_text_features = defaultdict(lambda: None)
+
     def forward(self, x):
         img, text = x
         img = img.to(DEVICE)
-        text = self.tokenizer(text).to(DEVICE)
+
+        if self.stored_text_features[text] is None:
+            text_features = self.tokenizer(text).to(DEVICE)
+            text_features = self.model.encode_text(text_features)
+            self.stored_text_features[text] = text_features
+        else:
+            text_features = self.stored_text_features[text]
 
         image_features = self.model.encode_image(img)
-        text_features = self.model.encode_text(text)
         image_features = image_features / image_features.norm(dim=-1, keepdim=True)
         text_features = text_features / text_features.norm(dim=-1, keepdim=True)
 
@@ -46,3 +54,9 @@ class OpenCLIP(torch.nn.Module):
         openclip_outputs = namedtuple("OpenCLIPOutputs", self.layer_names)
         out = openclip_outputs(out)
         return out
+
+
+
+
+
+

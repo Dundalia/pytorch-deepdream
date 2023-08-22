@@ -81,7 +81,7 @@ def build_image_name(config):
     input_name = 'rand_noise' if config['use_noise'] else config['input_name'].rsplit('.', 1)[0]
     layers = '_'.join(config['layers_to_use'])
     # Looks awful but makes the creation process transparent for other creators
-    img_name = f'{input_name}_width_{config["img_width"]}_model_{config["model_name"]}_{config["pretrained_weights"]}_{layers}_pyrsize_{config["pyramid_size"]}_pyrratio_{config["pyramid_ratio"]}_iter_{config["num_gradient_ascent_iterations"]}_lr_{config["lr"]}_shift_{config["spatial_shift_size"]}_smooth_{config["smoothing_coefficient"]}.jpg'
+    img_name = f'{input_name}_dimensions_{config["img_dimensions"]}_model_{config["model_name"]}_{config["pretrained_weights"]}_{layers}_pyrsize_{config["pyramid_size"]}_pyrratio_{config["pyramid_ratio"]}_iter_{config["num_gradient_ascent_iterations"]}_lr_{config["lr"]}_shift_{config["spatial_shift_size"]}_smooth_{config["smoothing_coefficient"]}.jpg'
     return img_name
 
 
@@ -314,7 +314,7 @@ def print_deep_dream_video_header(config):
     print(f'Using pretrained weights = {config["pretrained_weights"]}')
     print(f'Using model layers = {config["layers_to_use"]}')
     print(f'Using lending coefficient = {config["blend"]}.')
-    print(f'Video output width = {config["img_width"]}')
+    print(f'Video output width = {config["img_dimensions"]}')
     print(f'fps = {config["fps"]}')
     print('*' * 50, '\n')
 
@@ -324,7 +324,7 @@ def print_ouroboros_video_header(config):
     print(f'Using {config["frame_transform"]} for the frame transform')
     print(f'Using pretrained weights = {config["pretrained_weights"]}')
     print(f'Using model layers = {config["layers_to_use"]}')
-    print(f'Video output width = {config["img_width"]}')
+    print(f'Video output width = {config["img_dimensions"]}')
     print(f'fps = {config["fps"]}')
     print('*' * 50, '\n')
 

@@ -198,6 +198,7 @@ if __name__ == "__main__":
     parser.add_argument("--input", type=str, help="Input IMAGE or VIDEO name that will be used for dreaming", default='figures.jpg')
     parser.add_argument("--img_dimensions", nargs='+', type=int, help="Image width and optionally height, e.g. 300 or 300 400", default=None)
     parser.add_argument("--layers_to_use", type=str, nargs='+', help="Layer whose activations we should maximize while dreaming", default=['relu4_3'])
+    parser.add_argument("--text_prompt", type=str, help="Text prompt whose CLIP similaruty we should maximize while dreaming", default="Triangles")
     parser.add_argument("--model_name", choices=[m.name for m in SupportedModels],
                         help="Neural network (model) to use for dreaming", default=SupportedModels.VGG16_EXPERIMENTAL.name)
     parser.add_argument("--pretrained_weights", choices=[pw.name for pw in SupportedPretrainedWeights],
@@ -234,7 +235,7 @@ if __name__ == "__main__":
     config['dump_dir'] = OUT_VIDEOS_PATH if config['create_ouroboros'] else OUT_IMAGES_PATH
     config['dump_dir'] = os.path.join(config['dump_dir'], f'{config["model_name"]}_{config["pretrained_weights"]}')
     config['input_name'] = os.path.basename(config['input'])
-    if len(config["img_dimensions"]) == 1:
+    if config["img_dimensions"] and (len(config["img_dimensions"]) == 1):
         config["img_dimensions"] = config["img_dimensions"][0]
     
     # Set constants to clip constants in case
