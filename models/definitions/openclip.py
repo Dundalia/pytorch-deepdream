@@ -1,5 +1,9 @@
+from collections import namedtuple
+
 import torch
 import open_clip
+
+from utils.constants import *
 
 
 class OpenCLIP(torch.nn.Module):
@@ -7,8 +11,12 @@ class OpenCLIP(torch.nn.Module):
     def __init__(self, model_name="RN50", pretrained_weights=None, requires_grad=False, show_progress=False):
         super().__init__()
 
-        pretrained = pretrained_weights.lower()
-        if pretrained in open_clip.list_pretrained_tags_by_model(model_name):
+        if pretrained_weights:
+            pretrained = pretrained_weights.lower()
+        else:
+            pretrained = None
+            
+        if (pretrained is None) or (pretrained in open_clip.list_pretrained_tags_by_model(model_name)):
             model, _, _ = open_clip.create_model_and_transforms(model_name, pretrained=pretrained)
             self.tokenizer = open_clip.get_tokenizer(model_name)
         else:
@@ -27,8 +35,8 @@ class OpenCLIP(torch.nn.Module):
         img = img.to(DEVICE)
         text = self.tokenizer(text).to(DEVICE)
 
-        image_features = model.encode_image(image)
-        text_features = model.encode_text(text)
+        image_features = self.model.encode_image(img)
+        text_features = self.model.encode_text(text)
         image_features /= image_features.norm(dim=-1, keepdim=True)
         text_features /= text_features.norm(dim=-1, keepdim=True)
 

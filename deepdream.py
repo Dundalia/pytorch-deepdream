@@ -24,7 +24,7 @@ import utils.video_utils as video_utils
 # loss.backward(layer) <- original implementation did it like this it's equivalent to MSE(reduction='sum')/2
 def gradient_ascent(config, model, input_tensor, input_text, layer_ids_to_use, iteration):
     # Step 0: Feed forward pass
-    if model.__class__.__name__ == "CLIP":
+    if model.__class__.__name__ in ["CLIP", "OpenCLIP"]:
         out = model((input_tensor, input_text))
     else:
         out = model(input_tensor)

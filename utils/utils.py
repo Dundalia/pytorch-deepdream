@@ -136,12 +136,12 @@ def fetch_and_prepare_model(model_type, pretrained_weights, device):
         model = AlexNet(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.VIT.name:
         model = ViT(pretrained_weights, requires_grad=False, show_progress=True).to(device)
-    elif ("CLIP" in model_type) and (model_type in SupportedModel_to_ModelName.keys()):
-        model_name = SupportedModel_to_ModelName[model_type]
-        model = CLIP(model_name, pretrained_weights, requires_grad = False, show_progress = True).to(device)
     elif ("OPENCLIP" in model_type) and (model_type in SupportedModel_to_ModelName.keys()):
         model_name = SupportedModel_to_ModelName[model_type]
         model = OpenCLIP(model_name, pretrained_weights, requires_grad = False, show_progress = True).to(device)
+    elif ("CLIP" in model_type) and (model_type in SupportedModel_to_ModelName.keys()):
+        model_name = SupportedModel_to_ModelName[model_type]
+        model = CLIP(model_name, pretrained_weights, requires_grad = False, show_progress = True).to(device)
     else:
         raise Exception('Model not yet supported.')
     return model
