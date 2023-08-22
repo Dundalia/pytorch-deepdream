@@ -15,7 +15,7 @@ from models.definitions.vggs import Vgg16, Vgg16Experimental
 from models.definitions.googlenet import GoogLeNet
 from models.definitions.resnets import ResNet50
 from models.definitions.alexnet import AlexNet
-from models.definitions.clipnets import CLIP
+from models.definitions.clip import CLIP
 from models.definitions.openclip import OpenCLIP
 from .constants import *
 

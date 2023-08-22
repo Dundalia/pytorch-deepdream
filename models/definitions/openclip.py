@@ -17,7 +17,7 @@ class OpenCLIP(torch.nn.Module):
             pretrained = None
             
         if (pretrained is None) or (pretrained in open_clip.list_pretrained_tags_by_model(model_name)):
-            model, _, _ = open_clip.create_model_and_transforms(model_name, pretrained=pretrained)
+            model = open_clip.create_model(model_name, pretrained=pretrained, require_pretrained=True)
             self.tokenizer = open_clip.get_tokenizer(model_name)
         else:
             raise Exception(f'Pretrained weights {pretrained_weights} not yet supported for {self.__class__.__name__} {model_name} model.')
