@@ -3,7 +3,9 @@ scipy
 opencv-python
 imageio
 jupyter
+tqdm
 matplotlib
 torch
 torchvision
 clip
+open_clip_torch

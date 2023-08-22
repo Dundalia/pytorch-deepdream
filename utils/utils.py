@@ -16,6 +16,7 @@ from models.definitions.googlenet import GoogLeNet
 from models.definitions.resnets import ResNet50
 from models.definitions.alexnet import AlexNet
 from models.definitions.clipnets import CLIP
+from models.definitions.openclip import OpenCLIP
 from .constants import *
 
 
@@ -135,24 +136,12 @@ def fetch_and_prepare_model(model_type, pretrained_weights, device):
         model = AlexNet(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.VIT.name:
         model = ViT(pretrained_weights, requires_grad=False, show_progress=True).to(device)
-    elif model_type == SupportedModels.CLIPVITB32.name:
-        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "ViT-B/32").to(device)
-    elif model_type == SupportedModels.CLIPVITB16.name:
-        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "ViT-B/16").to(device)
-    elif model_type == SupportedModels.CLIPVITL14.name:
-        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "ViT-L/14").to(device)
-    elif model_type == SupportedModels.CLIPVITL14_336.name:
-        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "ViT-L/14@336px").to(device)
-    elif model_type == SupportedModels.CLIPRN50.name:
-        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN50").to(device)
-    elif model_type == SupportedModels.CLIPRN101.name:
-        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN101").to(device)
-    elif model_type == SupportedModels.CLIPRN50x4.name:
-        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN50x4").to(device)
-    elif model_type == SupportedModels.CLIPRN50x16.name:
-        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN50x16").to(device)
-    elif model_type == SupportedModels.CLIPRN50x64.name:
-        model = CLIP(requires_grad = False, show_progress = True, checkpoint = "RN50x64").to(device)
+    elif ("CLIP" in model_type) and (model_type in SupportedModel_to_ModelName.keys()):
+        model_name = SupportedModel_to_ModelName[model_type]
+        model = CLIP(model_name, pretrained_weights, requires_grad = False, show_progress = True).to(device)
+    elif ("OPENCLIP" in model_type) and (model_type in SupportedModel_to_ModelName.keys()):
+        model_name = SupportedModel_to_ModelName[model_type]
+        model = OpenCLIP(model_name, pretrained_weights, requires_grad = False, show_progress = True).to(device)
     else:
         raise Exception('Model not yet supported.')
     return model
