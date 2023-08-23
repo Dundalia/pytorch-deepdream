@@ -205,7 +205,7 @@ if __name__ == "__main__":
                         help="Pretrained weights to use for the above model", default=SupportedPretrainedWeights.IMAGENET.name)
 
     # Main params for experimentation (especially pyramid_size and pyramid_ratio)
-    parser.add_argument("--pyramid_size", type=int, help="Number of images in an image pyramid", default=4)
+    parser.add_argument("--pyramid_size", type=int, help="Number of images in an image pyramid", default=3)
     parser.add_argument("--pyramid_ratio", type=float, help="Ratio of image sizes in the pyramid", default=1.8)
     parser.add_argument("--num_gradient_ascent_iterations", type=int, help="Number of gradient ascent iterations", default=10)
     parser.add_argument("--lr", type=float, help="Learning rate i.e. step size in gradient ascent", default=0.09)
@@ -238,12 +238,17 @@ if __name__ == "__main__":
     if config["img_dimensions"] and (len(config["img_dimensions"]) == 1):
         config["img_dimensions"] = config["img_dimensions"][0]
     
-    # Set constants to clip constants in case
-    if "CLIP" in config["model_name"]:
+    # Set constants to clip constants in case of clip pretraining
+    if "CLIP" in config["pretrained_weights"]:
         ConstantsContext.use_clip()
+    else:
+        ConstantsContext.use_imagenet()
 
     # Correcting img_dimensions and pyramid_size for models with a fixed input resolution
     if config["model_name"] in FixedImageResolutions.keys():
+        if config["img_dimensions"] is None:
+            print(f"{config['model_name']} has a fixed input resolution of {FixedImageResolutions[config['model_name']]}. The image will be reshaped to the correct input resolution.")
+            config["img_dimensions"] = FixedImageResolutions[config["model_name"]]
         if config["img_dimensions"] != FixedImageResolutions[config["model_name"]]:
             print(f"{config['model_name']} has a fixed input resolution of {FixedImageResolutions[config['model_name']]}. It cannot take input of size {config['img_dimensions']}. The image will be reshaped to the correct input resolution.")
             config["img_dimensions"] = FixedImageResolutions[config["model_name"]]

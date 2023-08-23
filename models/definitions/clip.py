@@ -8,15 +8,14 @@ from utils.constants import *
 
 class CLIP(torch.nn.Module):
     """Only those layers are exposed which have already proven to work nicely."""
-    def __init__(self, model_name="ViT-B/16", pretrained_weights = SupportedPretrainedWeights.OPENAI.name, requires_grad=False, show_progress=False):
+    def __init__(self, model_name="ViT-B/16", pretrained_weights = SupportedPretrainedWeights.CLIP_OPENAI.name, requires_grad=False):
         super().__init__()
         
-        if (pretrained_weights is None) or (pretrained_weights == SupportedPretrainedWeights.OPENAI.name):
-            model, _ = clip.load(model_name, device=DEVICE)
+        if (pretrained_weights is None) or (pretrained_weights == SupportedPretrainedWeights.CLIP_OPENAI.name):
+            model = clip.load(model_name, device=DEVICE)[0].eval()
         else:
             raise Exception(f'Pretrained weights {pretrained_weights} not yet supported for {self.__class__.__name__} model.')
         
-        self.model = model.eval()
         self.layer_names = ["logits_per_image"]
 
         # Set these to False so that PyTorch won't be including them in it's autograd engine - eating up precious memory

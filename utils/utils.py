@@ -15,6 +15,7 @@ from models.definitions.vggs import Vgg16, Vgg16Experimental
 from models.definitions.googlenet import GoogLeNet
 from models.definitions.resnets import ResNet50
 from models.definitions.alexnet import AlexNet
+from models.definitions.convnext_base import ConvNeXt_base
 from models.definitions.clip import CLIP
 from models.definitions.openclip import OpenCLIP
 from .constants import *
@@ -136,12 +137,14 @@ def fetch_and_prepare_model(model_type, pretrained_weights, device):
         model = AlexNet(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.VIT.name:
         model = ViT(pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.CONVNEXT_BASE.name:
+        model = ConvNeXt_base(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif ("OPENCLIP" in model_type) and (model_type in SupportedModel_to_ModelName.keys()):
         model_name = SupportedModel_to_ModelName[model_type]
-        model = OpenCLIP(model_name, pretrained_weights, requires_grad = False, show_progress = True).to(device)
+        model = OpenCLIP(model_name, pretrained_weights, requires_grad = False).to(device)
     elif ("CLIP" in model_type) and (model_type in SupportedModel_to_ModelName.keys()):
         model_name = SupportedModel_to_ModelName[model_type]
-        model = CLIP(model_name, pretrained_weights, requires_grad = False, show_progress = True).to(device)
+        model = CLIP(model_name, pretrained_weights, requires_grad = False).to(device)
     else:
         raise Exception('Model not yet supported.')
     return model

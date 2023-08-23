@@ -8,21 +8,20 @@ from utils.constants import *
 
 class OpenCLIP(torch.nn.Module):
     """Only those layers are exposed which have already proven to work nicely."""
-    def __init__(self, model_name="RN50", pretrained_weights=None, requires_grad=False, show_progress=False):
+    def __init__(self, model_name="RN50", pretrained_weights=None, requires_grad=False):
         super().__init__()
 
         if pretrained_weights:
-            pretrained = pretrained_weights.lower()
+            pretrained = pretrained_weights[5:].lower()
         else:
             pretrained = None
             
         if (pretrained is None) or (pretrained in open_clip.list_pretrained_tags_by_model(model_name)):
-            model = open_clip.create_model(model_name, pretrained=pretrained, require_pretrained=True)
+            self.model = open_clip.create_model(model_name, pretrained=pretrained, require_pretrained=True).eval().to(DEVICE)
             self.tokenizer = open_clip.get_tokenizer(model_name)
         else:
             raise Exception(f'Pretrained weights {pretrained_weights} not yet supported for {self.__class__.__name__} {model_name} model.')
         
-        self.model = model.eval().to(DEVICE)
         self.layer_names = ["logits_per_image"]
 
         # Set these to False so that PyTorch won't be including them in it's autograd engine - eating up precious memory
