@@ -14,9 +14,6 @@ class ResNet(torch.nn.Module):
     def __init__(self, model_name = "RN50", pretrained_weights = SupportedPretrainedWeights.IMAGENET.name, requires_grad=False, show_progress=False):
         super().__init__()
 
-        if "CLIP" in pretrained_weights:
-            pretrained_weights = pretrained_weights[5:].lower()
-
         if pretrained_weights == SupportedPretrainedWeights.IMAGENET.name:
             if model_name == 'RN50':
                 model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT, progress=show_progress).eval()
@@ -63,7 +60,7 @@ class ResNet(torch.nn.Module):
                 new_key = old_key[7:]
                 new_state_dict[new_key] = state_dict[old_key]
 
-            model.fc = torch.nn.Linear(resnet50.fc.in_features, 365)
+            model.fc = torch.nn.Linear(model.fc.in_features, 365)
             model.load_state_dict(new_state_dict, strict=True)
 
             self.conv1 = model.conv1
@@ -120,7 +117,6 @@ class ResNet(torch.nn.Module):
 
     # Feel free to experiment with different layers
     def forward(self, x):
-        print("beginning: ", x.shape)
         activations = []
         x = self.conv1(x)
         x = self.bn1(x)

@@ -10,7 +10,7 @@ from utils.constants import *
 class ConvNeXt_XXlarge(torch.nn.Module):
     """Only those layers are exposed which have already proven to work nicely."""
 
-    def __init__(self, pretrained_weights = SupportedPretrainedWeights..name, requires_grad=False, show_progress=False):
+    def __init__(self, pretrained_weights = SupportedPretrainedWeights.CLIP_LAION2B_S34B_B82K_AUGREG.name, requires_grad=False, show_progress=False):
         super().__init__()
 
         if "CLIP" in pretrained_weights:

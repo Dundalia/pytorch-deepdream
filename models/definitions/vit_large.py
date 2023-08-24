@@ -4,6 +4,7 @@ from collections import namedtuple
 import torch
 from torchvision import models
 from torch.hub import download_url_to_file
+import open_clip
 
 from utils.constants import *
 
@@ -22,11 +23,11 @@ class ViT_large(torch.nn.Module):
             if model_name == 'ViT-L-32':
                 vit = models.vit_l_32(weights=models.ViT_L_32_Weights.DEFAULT).eval()
 
-                self.conv1 = vit.conv_proj
-                self.positional_embedding = vit.encoder.pos_embedding
-                self.ln_pre = nn.Identity()
-                self.layers = vit.encoder.layers
-                self.class_token = vit.class_token
+            self.conv1 = vit.conv_proj
+            self.positional_embedding = vit.encoder.pos_embedding
+            self.ln_pre = torch.nn.Identity()
+            self.layers = vit.encoder.layers
+            self.class_token = vit.class_token
 
 
         elif pretrained_weights.startswith("CLIP"):

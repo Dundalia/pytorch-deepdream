@@ -12,7 +12,7 @@ class CLIP(torch.nn.Module):
         super().__init__()
         
         if (pretrained_weights is None) or (pretrained_weights == SupportedPretrainedWeights.CLIP_OPENAI.name):
-            model = clip.load(model_name, device=DEVICE)[0].eval()
+            self.model = clip.load(model_name, device=DEVICE)[0].eval()
         else:
             raise Exception(f'Pretrained weights {pretrained_weights} not yet supported for {self.__class__.__name__} model.')
         
