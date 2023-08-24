@@ -25,7 +25,7 @@ class CLIP(torch.nn.Module):
 
     def forward(self, x):
         img, text = x
-        img = img.to(DEVICE)
+        img = img
         text = clip.tokenize(text).to(DEVICE)
 
         logits_per_image, logits_per_text = self.model(img, text)

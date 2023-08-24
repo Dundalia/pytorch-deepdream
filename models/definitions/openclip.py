@@ -17,7 +17,7 @@ class OpenCLIP(torch.nn.Module):
             pretrained = None
             
         if (pretrained is None) or (pretrained in open_clip.list_pretrained_tags_by_model(model_name)):
-            self.model = open_clip.create_model(model_name, pretrained=pretrained, require_pretrained=True).eval().to(DEVICE)
+            self.model = open_clip.create_model(model_name, pretrained=pretrained, require_pretrained=True).eval()
             self.tokenizer = open_clip.get_tokenizer(model_name)
         else:
             raise Exception(f'Pretrained weights {pretrained_weights} not yet supported for {self.__class__.__name__} {model_name} model.')
@@ -34,7 +34,7 @@ class OpenCLIP(torch.nn.Module):
 
     def forward(self, x):
         img, text = x
-        img = img.to(DEVICE)
+        img = img
 
         if self.stored_text_features[text] is None:
             text_features = self.tokenizer(text).to(DEVICE)

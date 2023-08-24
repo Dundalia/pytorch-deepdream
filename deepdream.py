@@ -239,7 +239,7 @@ if __name__ == "__main__":
         config["img_dimensions"] = config["img_dimensions"][0]
     
     # Set constants to clip constants in case of clip pretraining
-    if "CLIP" in config["pretrained_weights"]:
+    if config["pretrained_weights"].startswith("CLIP"):
         ConstantsContext.use_clip()
     else:
         ConstantsContext.use_imagenet()

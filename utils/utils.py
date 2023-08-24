@@ -16,6 +16,9 @@ from models.definitions.googlenet import GoogLeNet
 from models.definitions.resnets import ResNet50
 from models.definitions.alexnet import AlexNet
 from models.definitions.convnext_base import ConvNeXt_base
+from models.definitions.vit_base import ViT_base
+from models.definitions.vit_large import ViT_large
+from models.definitions.resnet import ResNet
 from models.definitions.clip import CLIP
 from models.definitions.openclip import OpenCLIP
 from .constants import *
@@ -125,6 +128,7 @@ def linear_blend(img1, img2, alpha=0.5):
 
 
 def fetch_and_prepare_model(model_type, pretrained_weights, device):
+    ## Vision Only Models - CNN
     if model_type == SupportedModels.VGG16.name:
         model = Vgg16(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.VGG16_EXPERIMENTAL.name:
@@ -135,16 +139,35 @@ def fetch_and_prepare_model(model_type, pretrained_weights, device):
         model = ResNet50(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.ALEXNET.name:
         model = AlexNet(pretrained_weights, requires_grad=False, show_progress=True).to(device)
-    elif model_type == SupportedModels.VIT.name:
-        model = ViT(pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.RN50.name:
+        model = ResNet("RN50", pretrained_weights, requires_grad=False, show_progres=True).to(device)
+    elif model_type == SupportedModels.RN101.name:
+        model = ResNet("RN101", pretrained_weights, requires_grad=False, show_progres=True).to(device)
+    elif model_type == SupportedModels.RN152.name:
+        model = ResNet("RN152", pretrained_weights, requires_grad=False, show_progres=True).to(device)
     elif model_type == SupportedModels.CONVNEXT_BASE.name:
         model = ConvNeXt_base(pretrained_weights, requires_grad=False, show_progress=True).to(device)
-    elif ("OPENCLIP" in model_type) and (model_type in SupportedModel_to_ModelName.keys()):
-        model_name = SupportedModel_to_ModelName[model_type]
-        model = OpenCLIP(model_name, pretrained_weights, requires_grad = False).to(device)
-    elif ("CLIP" in model_type) and (model_type in SupportedModel_to_ModelName.keys()):
+    ## Vision Only Models - ViT
+    elif model_type == SupportedModels.VIT_B_16.name:
+        model = ViT_base("ViT-B-16", pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.VIT_B_32.name:
+        model = ViT_base("ViT-B-32", pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.VIT_L_14.name:
+        model = ViT_large("ViT-L-14", pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.VIT_L_16.name:
+        model = ViT_large("ViT-L-16", pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.VIT_L_32.name:
+        model = ViT_large("ViT-L-32", pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.VIT_L_14_336.name:
+        model = ViT_large("ViT-L-14-336", pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    ## OpenAI CLIP models
+    elif (model_type.startswith("CLIP")) and (model_type in SupportedModel_to_ModelName.keys()):
         model_name = SupportedModel_to_ModelName[model_type]
         model = CLIP(model_name, pretrained_weights, requires_grad = False).to(device)
+    ## OpenCLIP Models
+    elif (model_type.startswith("OPENCLIP")) and (model_type in SupportedModel_to_ModelName.keys()):
+        model_name = SupportedModel_to_ModelName[model_type]
+        model = OpenCLIP(model_name, pretrained_weights, requires_grad = False).to(device)
     else:
         raise Exception('Model not yet supported.')
     return model

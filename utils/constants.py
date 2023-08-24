@@ -46,65 +46,72 @@ class TRANSFORMS(enum.Enum):
 
 
 class SupportedModels(enum.Enum):
-    VGG16 = 0
-    VGG16_EXPERIMENTAL = 1
-    GOOGLENET = 2
-    RESNET50 = 3
-    ALEXNET = 4
-    VIT = 5
-    CONVNEXT_BASE = 6
-    ## OpenAI CLIP models
-    CLIP_VITB32 = 6
-    CLIP_VITB16 = 7
-    CLIP_VITL14 = 8
-    CLIP_VITL14_336 = 9
-    CLIP_RN50 = 10
-    CLIP_RN101 = 11
-    CLIP_RN50x4 = 12
-    CLIP_RN50x16 = 13
-    CLIP_RN50x64 = 14
-    ## OpenCLIP models
-    OPENCLIP_COCA_VIT_B_32 = 15
-    OPENCLIP_COCA_VIT_L_14 = 16
-    OPENCLIP_CONVNEXT_BASE = 17
-    OPENCLIP_CONVNEXT_BASE_W = 18
-    OPENCLIP_CONVNEXT_BASE_W_320 = 19
-    OPENCLIP_CONVNEXT_LARGE_D = 20
-    OPENCLIP_CONVNEXT_LARGE_D_320 = 21
-    OPENCLIP_CONVNEXT_XXLARGE = 22
-    OPENCLIP_EVA01_G_14 = 23
-    OPENCLIP_EVA01_G_14_PLUS = 24
-    OPENCLIP_EVA02_B_16 = 25
-    OPENCLIP_EVA02_E_14 = 26
-    OPENCLIP_EVA02_E_14_PLUS = 27
-    OPENCLIP_EVA02_L_14 = 28
-    OPENCLIP_EVA02_L_14_336 = 29
-    OPENCLIP_RN50 = 30
-    OPENCLIP_RN50_QUICKGELU = 31
-    OPENCLIP_RN50X4 = 32
-    OPENCLIP_RN50X16 = 33
-    OPENCLIP_RN50X64 = 34
-    OPENCLIP_RN101 = 35
-    OPENCLIP_RN101_QUICKGELU = 36
-    OPENCLIP_ROBERTA_VIT_B_32 = 37
-    OPENCLIP_VIT_B_16 = 38
-    OPENCLIP_VIT_B_16_PLUS_240 = 39
-    OPENCLIP_VIT_B_32 = 40
-    OPENCLIP_VIT_B_32_QUICKGELU = 41
-    OPENCLIP_VIT_BIGG_14 = 42
-    OPENCLIP_VIT_G_14 = 43
-    OPENCLIP_VIT_H_14 = 44
-    OPENCLIP_VIT_L_14 = 45
-    OPENCLIP_VIT_L_14_336 = 46
-    OPENCLIP_XLM_ROBERTA_BASE_VIT_B_32 = 47
-    OPENCLIP_XLM_ROBERTA_LARGE_VIT_H_14 = 48
-
-    
+    ## Vision Only Models - CNN
+    VGG16  =  0
+    VGG16_EXPERIMENTAL  =  1
+    GOOGLENET  =  2
+    RESNET50  =  3
+    RN50  =  4
+    RN101  =  5
+    RN152  =  6
+    ALEXNET  =  7
+    CONVNEXT_BASE  =  8
+    ## Vision Only Models - ViT
+    VIT_B_16  =  9
+    VIT_B_32  =  10
+    VIT_L_14  =  11
+    VIT_L_16  =  12
+    VIT_L_32  =  13
+    VIT_L_14_336  =  14
+    ## OpenAI CLIP Models
+    CLIP_VIT_B_32  =  15
+    CLIP_VIT_B_16  =  16
+    CLIP_VIT_L_14  =  17
+    CLIP_VIT_L_14_336  =  18
+    CLIP_RN50  =  19
+    CLIP_RN101  =  20
+    CLIP_RN50x4  =  21
+    CLIP_RN50x16  =  22
+    CLIP_RN50x64  =  23
+    ## OpenCLIP Models
+    OPENCLIP_COCA_VIT_B_32  =  24
+    OPENCLIP_COCA_VIT_L_14  =  25
+    OPENCLIP_CONVNEXT_BASE  =  26
+    OPENCLIP_CONVNEXT_BASE_W  =  27
+    OPENCLIP_CONVNEXT_BASE_W_320  =  28
+    OPENCLIP_CONVNEXT_LARGE_D  =  29
+    OPENCLIP_CONVNEXT_LARGE_D_320  =  30
+    OPENCLIP_CONVNEXT_XXLARGE  =  31
+    OPENCLIP_EVA01_G_14  =  32
+    OPENCLIP_EVA01_G_14_PLUS  =  33
+    OPENCLIP_EVA02_B_16  =  34
+    OPENCLIP_EVA02_E_14  =  35
+    OPENCLIP_EVA02_E_14_PLUS  =  36
+    OPENCLIP_EVA02_L_14  =  37
+    OPENCLIP_EVA02_L_14_336  =  38
+    OPENCLIP_RN50  =  39
+    OPENCLIP_RN50_QUICKGELU  =  40
+    OPENCLIP_RN50X4  =  41
+    OPENCLIP_RN50X16  =  42
+    OPENCLIP_RN50X64  =  43
+    OPENCLIP_RN101  =  44
+    OPENCLIP_RN101_QUICKGELU  =  45
+    OPENCLIP_ROBERTA_VIT_B_32  =  46
+    OPENCLIP_VIT_B_16  =  47
+    OPENCLIP_VIT_B_16_PLUS_240  =  48
+    OPENCLIP_VIT_B_32  =  49
+    OPENCLIP_VIT_B_32_QUICKGELU  =  50
+    OPENCLIP_VIT_BIGG_14  =  51
+    OPENCLIP_VIT_G_14  =  52
+    OPENCLIP_VIT_H_14  =  53
+    OPENCLIP_VIT_L_14  =  54
+    OPENCLIP_VIT_L_14_336  =  55
+    OPENCLIP_XLM_ROBERTA_BASE_VIT_B_32  =  56
+    OPENCLIP_XLM_ROBERTA_LARGE_VIT_H_14  =  57    
 
 class SupportedPretrainedWeights(enum.Enum):
     IMAGENET = 0
     PLACES_365 = 1
-    CC12M = 2
     CLIP_CC12M = 2
     CLIP_COMMONPOOL_L_BASIC_S1B_B8K = 3
     CLIP_COMMONPOOL_L_CLIP_S1B_B8K = 4
@@ -167,16 +174,23 @@ class SupportedPretrainedWeights(enum.Enum):
     CLIP_YFCC15M = 61
 
 
-FixedImageResolutionClasses = ["CLIP", "OpenCLIP", "ViT"]
+FixedImageResolutionClasses = ["ViT_base", "ViT_large", "CLIP", "OpenCLIP"]
 
 
+## Some models have a fixed input size due to the Attention layers.
+## The CNN listed below have an attention pooling layer which require the model to have a fixed input size
 FixedImageResolutions = {
-    "VIT" : [224,224],
+    ## Vision Only Models - ViT
+    "VIT_B_16" : (224,224), 
+    "VIT_B_32" : (224,224), 
+    "VIT_L_14" : (224,224), 
+    "VIT_L_32" : (224,224), 
+    "VIT_L_14_336" : (336,336), 
     ## OpenAI CLIP Models
-    "CLIP_VITB32" : (224,224),
-    "CLIP_VITB16" : (224,224),
-    "CLIP_VITL14" : (224,224),
-    "CLIP_VITL14_336" : (336,336),
+    "CLIP_VIT_B_32" : (224,224),
+    "CLIP_VIT_B_16" : (224,224),
+    "CLIP_VIT_L_14" : (224,224),
+    "CLIP_VIT_L_14_336" : (336,336),
     "CLIP_RN50" : (224,224),
     "CLIP_RN101" : (224,224),
     "CLIP_RN50x4" : (288,288),
@@ -222,10 +236,10 @@ FixedImageResolutions = {
 
 SupportedModel_to_ModelName = {
     ## OpenAI CLIP models
-    "CLIP_VITB32" : "ViT-B/32",
-    "CLIP_VITB16" : "ViT-B/16",
-    "CLIP_VITL14" : "ViT-L/14",
-    "CLIP_VITL14_336" : "ViT-L/14@336px",
+    "CLIP_VIT_B_32" : "ViT-B/32",
+    "CLIP_VIT_B_16" : "ViT-B/16",
+    "CLIP_VIT_L_14" : "ViT-L/14",
+    "CLIP_VIT_L_14_336" : "ViT-L/14@336px",
     "CLIP_RN50" : "RN50",
     "CLIP_RN101" : "RN101",
     "CLIP_RN50x4" : "RN50x4",

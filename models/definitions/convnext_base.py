@@ -13,9 +13,6 @@ class ConvNeXt_base(torch.nn.Module):
     def __init__(self, pretrained_weights = SupportedPretrainedWeights.IMAGENET.name, requires_grad=False, show_progress=False):
         super().__init__()
 
-        if "CLIP" in pretrained_weights:
-            pretrained_weights = pretrained_weights[5:].lower()
-
         if pretrained_weights == SupportedPretrainedWeights.IMAGENET.name: 
             convnext = models.convnext_base(weights=models.convnext.ConvNeXt_Base_Weights.DEFAULT, progress=show_progress).eval()
             
@@ -24,32 +21,37 @@ class ConvNeXt_base(torch.nn.Module):
             self.layer2 = convnext.features[2:4] 
             self.layer3 = convnext.features[4:6] 
             self.layer4 = convnext.features[6:8] 
+
+        elif pretrained_weights.startswith("CLIP"):
+            pretrained_weights = pretrained_weights[5:].lower()
             
-        elif pretrained_weights in open_clip.list_pretrained_tags_by_model("convnext_base"):
-            convnext = open_clip.create_model(
-                "convnext_base", 
-                pretrained=pretrained_weights, 
-                require_pretrained=True
-            ).visual.eval()
+            if pretrained_weights in open_clip.list_pretrained_tags_by_model("convnext_base"):
+                convnext = open_clip.create_model(
+                    "convnext_base", 
+                    pretrained=pretrained_weights, 
+                    require_pretrained=True
+                ).visual.eval()
+    
+                self.layer0 = convnext.trunk.stem
+                self.layer1 = convnext.trunk.stages[0] 
+                self.layer2 = convnext.trunk.stages[1] 
+                self.layer3 = convnext.trunk.stages[2] 
+                self.layer4 = convnext.trunk.stages[3]
 
-            self.layer0 = convnext.trunk.stem
-            self.layer1 = convnext.trunk.stages[0] 
-            self.layer2 = convnext.trunk.stages[1] 
-            self.layer3 = convnext.trunk.stages[2] 
-            self.layer4 = convnext.trunk.stages[3]
+            elif pretrained_weights in open_clip.list_pretrained_tags_by_model("convnext_base_w"):
+                convnext = open_clip.create_model(
+                    "convnext_base_w", 
+                    pretrained=pretrained_weights, 
+                    require_pretrained=True
+                ).visual.eval()
+    
+                self.layer0 = convnext.trunk.stem
+                self.layer1 = convnext.trunk.stages[0] 
+                self.layer2 = convnext.trunk.stages[1] 
+                self.layer3 = convnext.trunk.stages[2] 
+                self.layer4 = convnext.trunk.stages[3]
 
-        elif pretrained_weights in open_clip.list_pretrained_tags_by_model("convnext_base_w"):
-            convnext = open_clip.create_model(
-                "convnext_base_w", 
-                pretrained=pretrained_weights, 
-                require_pretrained=True
-            ).visual.eval()
-
-            self.layer0 = convnext.trunk.stem
-            self.layer1 = convnext.trunk.stages[0] 
-            self.layer2 = convnext.trunk.stages[1] 
-            self.layer3 = convnext.trunk.stages[2] 
-            self.layer4 = convnext.trunk.stages[3]
+            
             
         else:
             raise Exception(f'Pretrained weights {pretrained_weights} not yet supported for {self.__class__.__name__} model.')
