@@ -16,6 +16,7 @@ from models.definitions.googlenet import GoogLeNet
 from models.definitions.resnets import ResNet50
 from models.definitions.alexnet import AlexNet
 from models.definitions.convnext_base import ConvNeXt_base
+from models.definitions.convnext_large import ConvNeXt_large
 from models.definitions.convnext_xxlarge import ConvNeXt_XXlarge
 from models.definitions.vit_base import ViT_base
 from models.definitions.vit_large import ViT_large
@@ -148,6 +149,8 @@ def fetch_and_prepare_model(model_type, pretrained_weights, device):
         model = ResNet("RN152", pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.CONVNEXT_BASE.name:
         model = ConvNeXt_base(pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.CONVNEXT_LARGE.name:
+        model = ConvNeXt_large(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.CONVNEXT_XXLARGE.name:
         model = ConvNeXt_XXlarge(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     ## Vision Only Models - ViT
