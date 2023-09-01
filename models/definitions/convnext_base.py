@@ -63,7 +63,6 @@ class ConvNeXt_base(torch.nn.Module):
             for param in self.parameters():
                 param.requires_grad = False
 
-    # Feel free to experiment with different layers
     def forward(self, x):
 
         x = self.layer0(x)

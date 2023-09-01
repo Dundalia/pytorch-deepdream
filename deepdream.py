@@ -95,7 +95,7 @@ def deep_dream_static_image(config, img):
     for pyramid_level in range(config['pyramid_size']):
         new_shape = utils.get_new_shape(config, base_shape, pyramid_level)
         img = cv.resize(img, (new_shape[1], new_shape[0]))
-        # Generate padded imags in case of FixedImageResolutions models
+        # Generate padded image in case of FixedImageResolutions models
         if model.__class__.__name__ in FixedImageResolutionClasses:
             img = utils.pad_image_to_shape(img, base_shape)
 

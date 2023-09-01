@@ -9,9 +9,8 @@ from utils.constants import *
 
 
 class ViT_base(torch.nn.Module):
-    """Only 4 layers of the transformer module with even intervals in between"""
-
-    def __init__(self, model_name = "ViT-B-16", pretrained_weights = None, requires_grad=False, show_progress=False):
+    """Only those layers are exposed which have already proven to work nicely."""
+    def __init__(self, model_name = "ViT-B-16", pretrained_weights = SupportedPretrainedWeights.IMAGENET.name, requires_grad=False, show_progress=False):
         super().__init__()
 
         if pretrained_weights == SupportedPretrainedWeights.IMAGENET.name:
@@ -44,14 +43,26 @@ class ViT_base(torch.nn.Module):
         else:
             raise Exception(f'Pretrained weights {pretrained_weights} not yet supported for {self.__class__.__name__} {model_name} model.')
 
-        self.layer_names = ['layer1', 'layer4', 'layer7', 'layer11']
+        self.layer_names = [
+            'layer0',
+            'layer1',
+            'layer2',
+            'layer3',
+            'layer4',
+            'layer5',
+            'layer6',
+            'layer7',
+            'layer8',
+            'layer9',
+            'layer10',
+            'layer11'
+            ]
 
         # Set these to False so that PyTorch won't be including them in it's autograd engine - eating up precious memory
         if not requires_grad:
             for param in self.parameters():
                 param.requires_grad = False
 
-    # Feel free to experiment with different layers
     def forward(self, x):
         activations = []
         
@@ -64,8 +75,7 @@ class ViT_base(torch.nn.Module):
 
         for index, layer in enumerate(self.layers):
           x = layer(x)
-          if ("layer"+str(index+1) in self.layer_names):
-            activations.append(x)
+          activations.append(x)
 
         # Feel free to experiment with different layers.
         vit_base_outputs = namedtuple("ViT_baseOutputs", self.layer_names)

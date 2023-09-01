@@ -9,7 +9,6 @@ from utils.constants import *
 
 class ConvNeXt_large(torch.nn.Module):
     """Only those layers are exposed which have already proven to work nicely."""
-
     def __init__(self, pretrained_weights = SupportedPretrainedWeights.IMAGENET.name, requires_grad=False, show_progress=False):
         super().__init__()
 
@@ -61,7 +60,6 @@ class ConvNeXt_large(torch.nn.Module):
             for param in self.parameters():
                 param.requires_grad = False
 
-    # Feel free to experiment with different layers
     def forward(self, x):
 
         x = self.layer0(x)
