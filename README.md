@@ -8,6 +8,8 @@ And it will give you the power to create these weird, psychedelic-looking images
 <p align="center">
 <img src="data/examples/figures_width_600_model_VGG16_IMAGENET_relu4_3_pyrsize_12_pyrratio_1.4_iter_10_lr_0.09_shift_32_resized500.jpg" width="488"/>
 <img src="data/examples/lion_width_600_model_VGG16_EXPERIMENTAL_IMAGENET_relu3_3_pyrsize_4_pyrratio_1.8_iter_10_lr_0.09_shift_32_resized400.jpg" width="325"/>
+<img 
+src="data/examples/figures_dimensions_600_model_RN50_CLIP_OPENAI_layer2_layer3_pyrsize_8_pyrratio_1.4_iter_10_lr_0.09_shift_32_smooth_0.5.jpg">
 </p>
 
 Not bad, huh?
