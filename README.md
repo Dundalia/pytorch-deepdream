@@ -41,6 +41,7 @@ Who would have said that neural networks had this creativity hidden inside? :art
 
 Most of the original Deep Dream repos were written in **Caffe** and the ones written in PyTorch are usually really hard to read and understand.
 This repo is an attempt of making the **cleanest** DeepDream repo that I'm aware of + it's written in **PyTorch!** :heart:
+Also most of the other repos are focused on deep dreaming Convolutional Neural Networks (CNNs). There was not much resource experimenting with Vision Transformers (ViT) model variants and the vision module of CLIP variants. The visual patterns that would emerge in pretrained CNNs on image recognition tasks has been studied extensively but we were curious to observe and compare the visual artifacts that would emerge by deep dreaming ViTs and CLIP variants. 
 
 ## Static Image Examples
 
@@ -48,7 +49,7 @@ Here are some examples that you can create using this code!
 
 ### Optimizing shallower layers = Amplify low-level features
 
-By using shallower layers of neural networks you'll get lower level patterns (edges, circles, colors, etc.) as the output:
+By using shallower layers of CNN neural networks you'll get lower level patterns (edges, circles, colors, etc.) as the output:
 
 <p align="center">
 <img src="data/examples/low_level_dreaming/figures_width_600_model_RESNET50_IMAGENET_layer2_pyrsize_11_pyrratio_1.3_iter_30_lr_0.09_shift_150_resized300.jpg" width="270"/>
@@ -70,6 +71,12 @@ By using deeper network layers you'll get higher level patterns (eyes, snouts, a
 
 The 1st and 3rd were created using VGG 16 (ImageNet) and the middle one using ResNet50 pretrained on Places 365.
 
+
+### Optimizing visual and text prompt similarity (CLIP models)
+By passing a textual prompt through a CLIP model, the final similarity logits to a given image can be maximized. This can open a possibility of injecting infinite concepts and artifacts inside an image!
+
+
+
 ### Dataset matters (ImageNet vs Places 365)
 
 If we keep every other parameter the same but we swap the pretrained weights we get these:
@@ -80,6 +87,12 @@ If we keep every other parameter the same but we swap the pretrained weights we 
 </p>
 
 Left: **ResNet50-ImageNet** (we can see more animal features) Right: **ResNet50-Places365** (human built stuff, etc.).
+
+
+For ResNet50, changing the pretraining datasets and training recipes and tasks (image recognition vs CLIP's pretraining) will yield:
+
+
+
 
 ### Impact of increasing the pyramid size
 
@@ -195,6 +208,14 @@ To create some **static Deep Dream images** run the following command:
 This will use the default settings but you'll immediately get a meaningful result saved to:
 
 `data/out-images/VGG16_EXPERIMENTAL_IMAGENET/`
+
+Update: You can experiment deepdreaming different layers of different models specifying also their pretraining dataset and also text prompt deepdreaming for Openai and OpenCLIP CLIP models if available. As an example:
+
+`! python deepdream.py --input <img_name> --layers_to_use "logits_per_image" --text_prompt "monkey peeling a banana" --model_name "CLIP_VIT_B_16" --pretrained_weights "CLIP_OPENAI" --num_gradient_ascent_iterations 100 --pyramid_ratio 1.2 --pyramid_size 3`
+
+The result will be saved to: 
+
+`data/out-images/CLIP_VIT_B_16_CLIP_OPENAI/golden_gate_dimensions_(224, 224)_model_CLIP_VIT_B_16_CLIP_OPENAI_logits_per_image_pyrsize_3_pyrratio_1.2_iter_100_lr_0.09_shift_32_smooth_0.5.jpg`
 
 *Note: the output directory will change depending on the model and pretrained weights you use.*
 
