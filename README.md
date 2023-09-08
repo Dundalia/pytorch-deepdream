@@ -79,7 +79,7 @@ By passing a textual prompt through a CLIP model, the final similarity logits to
 
 
 
-### Dataset matters (ImageNet vs Places 365)
+### Dataset matters 
 
 If we keep every other parameter the same but we swap the pretrained weights we get these:
 
@@ -93,8 +93,14 @@ Left: **ResNet50-ImageNet** (we can see more animal features) Right: **ResNet50-
 
 For ResNet50, changing the pretraining datasets and training recipes and tasks (image recognition vs CLIP's pretraining) will yield:
 
-
-
+<p align="center">
+<img src="data/examples/dataset_matters/figures_dimensions_600_model_RN50_CLIP_CC12M_layer2_layer3_pyrsize_8_pyrratio_1.4_iter_10_lr_0.09_shift_32_smooth_0.5.jpg" width="170"/>
+<img src="data/examples/dataset_matters/figures_dimensions_600_model_RN50_CLIP_OPENAI_layer2_layer3_pyrsize_8_pyrratio_1.4_iter_10_lr_0.09_shift_32_smooth_0.5.jpg" width="170"/>
+<img  src="data/examples/dataset_matters/figures_dimensions_600_model_RN50_CLIP_YFCC15M_layer2_layer3_pyrsize_8_pyrratio_1.4_iter_10_lr_0.09_shift_32_smooth_0.5.jpg" width="170"/>
+<img   src="data/examples/dataset_matters/figures_dimensions_600_model_RN50_IMAGENET_layer2_layer3_pyrsize_8_pyrratio_1.4_iter_10_lr_0.09_shift_32_smooth_0.5.jpg" width="170"/>
+<img   src="data/examples/dataset_matters/figures_dimensions_600_model_RN50_PLACES_365_layer2_layer3_pyrsize_8_pyrratio_1.4_iter_10_lr_0.09_shift_32_smooth_0.5.jpg" width="170"/>
+</p>
+From left to right: ResNet50-CC12M, ResNet50-OpenAI, ResNet50-YFCC15M, ResNet50-ImageNet, ResNet50-Places365.
 
 ### Impact of increasing the pyramid size
 
@@ -205,7 +211,7 @@ your files (images/videos) by their name instead of using absolute/relative path
 
 To create some **static Deep Dream images** run the following command:
 
-`python deepdream.py --input <img_name> --img_width 600`
+`python deepdream.py --input <img_name> --img_dimensions 600`
 
 This will use the default settings but you'll immediately get a meaningful result saved to:
 
