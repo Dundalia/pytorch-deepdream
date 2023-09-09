@@ -145,12 +145,12 @@ If we apply only central zoom we get this:
 
 Applying central zoom and at the same time applying a 3 degree rotation per frame yields this:
 
-<img src="data/examples/ouroboros/zoom_rotate.gif" />
+<p align="left">
+<img src="data/examples/ouroboros/zoom_rotate.gif" width="270"/>
 
-<video width="320" height="240" controls>
-  <source src="data/examples/ouroboros/ouroboros_video_fps_30_figures_dimensions_400_model_RN50_CLIP_OPENAI_layer2_layer3_pyrsize_3_pyrratio_1.2_iter_1_lr_0.09_shift_32_smooth_0.5.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<img src="data/examples/ouroboros/ouroboros_video_fps_30_figures_dimensions_400_model_RN50_CLIP_OPENAI_layer2_layer3_pyrsize_3_pyrratio_1.2_iter_1_lr_0.09_shift_32_smooth_0.5.gif" width="270"/>
+</p>
+
 
 ### Ouroboros: Translation 
 
