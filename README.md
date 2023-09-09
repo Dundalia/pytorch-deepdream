@@ -147,6 +147,11 @@ Applying central zoom and at the same time applying a 3 degree rotation per fram
 
 <img src="data/examples/ouroboros/zoom_rotate.gif" />
 
+<video width="320" height="240" controls>
+  <source src="data/examples/ouroboros/ouroboros_video_fps_30_figures_dimensions_400_model_RN50_CLIP_OPENAI_layer2_layer3_pyrsize_3_pyrratio_1.2_iter_1_lr_0.09_shift_32_smooth_0.5.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ### Ouroboros: Translation 
 
 Finally if we do a simple translation (5 px per frame top left to bottom right direction):
