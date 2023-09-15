@@ -13,9 +13,9 @@ class AlexNet(torch.nn.Module):
     def __init__(self, pretrained_weights, requires_grad=False, show_progress=False):
         super().__init__()
         if pretrained_weights == SupportedPretrainedWeights.IMAGENET.name:
-            alexnet = models.alexnet(pretrained=True, progress=show_progress).eval()
+            alexnet = models.alexnet(weights=models.AlexNet_Weights.DEFAULT, progress=show_progress).eval()
         elif pretrained_weights == SupportedPretrainedWeights.PLACES_365.name:
-            alexnet = models.alexnet(pretrained=False, progress=show_progress).eval()
+            alexnet = models.alexnet(weights=None, progress=show_progress).eval()
 
             binary_name = 'alexnet_places365.pth.tar'
             alexnet_places365_binary_path = os.path.join(BINARIES_PATH, binary_name)

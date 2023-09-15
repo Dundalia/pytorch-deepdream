@@ -50,7 +50,7 @@ class SupportedModels(enum.Enum):
     VGG16  =  0
     VGG16_EXPERIMENTAL  =  1
     GOOGLENET  =  2
-    RESNET50  =  3
+    RESNET50_EXPERIMENTAL  =  3
     RN50  =  4
     RN101  =  5
     RN152  =  6
