@@ -252,9 +252,6 @@ if __name__ == "__main__":
         if config["img_dimensions"] != FixedImageResolutions[config["model_name"]]:
             print(f"{config['model_name']} has a fixed input resolution of {FixedImageResolutions[config['model_name']]}. It cannot take input of size {config['img_dimensions']}. The image will be reshaped to the correct input resolution.")
             config["img_dimensions"] = FixedImageResolutions[config["model_name"]]
-        if config["pyramid_size"] != 1:
-            print(f"{config['model_name']} has a fixed input resolution. Thus it can't support {config['pyramid_size']} different input resolutions.")
-            config["pyramid_size"] = 1
             
     # Create Ouroboros video (feeding neural network's output to it's input)
     if config['create_ouroboros']:
