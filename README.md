@@ -77,7 +77,13 @@ The 1st and 3rd were created using VGG 16 (ImageNet) and the middle one using Re
 ### Optimizing visual and text prompt similarity (CLIP models)
 By passing a textual prompt through a CLIP model, the final similarity logits to a given image can be maximized. This can open a possibility of injecting infinite concepts and artifacts inside an image!
 
+<p align="center">
+<img src="data/examples/prompt_deepdreaming/whales.jpg" width="320"/>
+<img src="data/examples/prompt_deepdreaming/squares and triangles.jpg" width="320"/>
+   <img src="data/examples/prompt_deepdreaming/NewYork City.jpg" width="320"/>
+</p>
 
+**OpenCLIP ConvNext-base-320** model with the following textual prompts from left to right: **Whales**, **Squares and Triangles**, and **NewYork City**. 
 
 ### Dataset matters 
 
@@ -352,7 +358,9 @@ I found these repos useful (while developing this one):
 * [AI-Art](https://github.com/Adi-iitd/AI-Art/blob/master/DeepDream.py) (PyTorch)
 * [neural-dream](https://github.com/ProGamerGov/neural-dream) (PyTorch)
 * [DeepDream](https://github.com/CharlesPikachu/DeepDream) (PyTorch)
-
+* [CLIP](https://github.com/openai/CLIP) (PyTorch)
+* [OpenCLIP](https://github.com/mlfoundations/open_clip) (PyTorch)
+    
 I found the images I was using here:
 * [awesome figures pic](https://www.pexels.com/photo/action-android-device-electronics-595804/)
 * [awesome bridge pic](https://www.pexels.com/photo/gray-bridge-and-trees-814499/)
@@ -373,39 +381,6 @@ If you find this code useful for your research, please cite the following:
   publisher = {GitHub},
   journal = {GitHub repository},
   howpublished = {\url{https://github.com/gordicaleksa/pytorch-deepdream}},
-}
-```
-```
-@software{ilharco_gabriel_2021_5143773,
-  author       = {Ilharco, Gabriel and
-                  Wortsman, Mitchell and
-                  Wightman, Ross and
-                  Gordon, Cade and
-                  Carlini, Nicholas and
-                  Taori, Rohan and
-                  Dave, Achal and
-                  Shankar, Vaishaal and
-                  Namkoong, Hongseok and
-                  Miller, John and
-                  Hajishirzi, Hannaneh and
-                  Farhadi, Ali and
-                  Schmidt, Ludwig},
-  title        = {OpenCLIP},
-  month        = jul,
-  year         = 2021,
-  note         = {If you use this software, please cite it as below.},
-  publisher    = {Zenodo},
-  version      = {0.1},
-  doi          = {10.5281/zenodo.5143773},
-  url          = {https://doi.org/10.5281/zenodo.5143773}
-}
-```
-```
-@inproceedings{Radford2021LearningTV,
-  title={Learning Transferable Visual Models From Natural Language Supervision},
-  author={Alec Radford and Jong Wook Kim and Chris Hallacy and A. Ramesh and Gabriel Goh and Sandhini Agarwal and Girish Sastry and Amanda Askell and Pamela Mishkin and Jack Clark and Gretchen Krueger and Ilya Sutskever},
-  booktitle={ICML},
-  year={2021}
 }
 ```
 
