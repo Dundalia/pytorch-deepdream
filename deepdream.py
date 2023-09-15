@@ -235,9 +235,12 @@ if __name__ == "__main__":
     config['dump_dir'] = OUT_VIDEOS_PATH if config['create_ouroboros'] else OUT_IMAGES_PATH
     config['dump_dir'] = os.path.join(config['dump_dir'], f'{config["model_name"]}_{config["pretrained_weights"]}')
     config['input_name'] = os.path.basename(config['input'])
-    if config["img_dimensions"] and (len(config["img_dimensions"]) == 1):
-        config["img_dimensions"] = config["img_dimensions"][0]
-    
+    if config["img_dimensions"]:
+        if (len(config["img_dimensions"]) == 1):
+            config["img_dimensions"] = config["img_dimensions"][0]
+        elif (len(config["img_dimensions"]) == 2):
+            config["img_dimensions"] = tuple(config["img_dimensions"])
+
     # Set constants to clip constants in case of clip pretraining
     if config["pretrained_weights"].startswith("CLIP"):
         ConstantsContext.use_clip()
