@@ -43,7 +43,7 @@ Who would have said that neural networks had this creativity hidden inside? :art
 
 Most of the original Deep Dream repos were written in **Caffe** and the ones written in PyTorch are usually really hard to read and understand.
 This repo is an attempt of making the **cleanest** DeepDream repo that I'm aware of + it's written in **PyTorch!** :heart:
-Also most of the other repos are focused on deep dreaming Convolutional Neural Networks (CNNs). There was not much resource experimenting with Vision Transformers (ViT) model variants and the vision module of CLIP variants. The visual patterns that would emerge in pretrained CNNs on image recognition tasks has been studied extensively but we were curious to observe and compare the visual artifacts that would emerge by deep dreaming ViTs and CLIP variants. 
+Update: Also most of the other repos are focused on deep dreaming Convolutional Neural Networks (CNNs). There was not much resource experimenting with Vision Transformers (ViT) model variants and the vision module of CLIP variants. The visual patterns that would emerge in pretrained CNNs on image recognition tasks has been studied extensively but we were curious to observe and compare the visual artifacts that would emerge by deep dreaming ViTs and CLIP variants. 
 
 ## Static Image Examples
 
@@ -91,7 +91,7 @@ If we keep every other parameter the same but we swap the pretrained weights we 
 Left: **ResNet50-ImageNet** (we can see more animal features) Right: **ResNet50-Places365** (human built stuff, etc.).
 
 
-For ResNet50, changing the pretraining datasets and training recipes and tasks (image recognition vs CLIP's pretraining) will yield:
+For ResNet50, changing the pretraining datasets and training objectives (image recognition vs CLIP's pretraining) will yield:
 
 <p align="center">
 <img src="data/examples/dataset_matters/figures_dimensions_600_model_RN50_CLIP_CC12M_layer2_layer3_pyrsize_8_pyrratio_1.4_iter_10_lr_0.09_shift_32_smooth_0.5.jpg" width="170"/>
@@ -373,6 +373,39 @@ If you find this code useful for your research, please cite the following:
   publisher = {GitHub},
   journal = {GitHub repository},
   howpublished = {\url{https://github.com/gordicaleksa/pytorch-deepdream}},
+}
+```
+```
+@software{ilharco_gabriel_2021_5143773,
+  author       = {Ilharco, Gabriel and
+                  Wortsman, Mitchell and
+                  Wightman, Ross and
+                  Gordon, Cade and
+                  Carlini, Nicholas and
+                  Taori, Rohan and
+                  Dave, Achal and
+                  Shankar, Vaishaal and
+                  Namkoong, Hongseok and
+                  Miller, John and
+                  Hajishirzi, Hannaneh and
+                  Farhadi, Ali and
+                  Schmidt, Ludwig},
+  title        = {OpenCLIP},
+  month        = jul,
+  year         = 2021,
+  note         = {If you use this software, please cite it as below.},
+  publisher    = {Zenodo},
+  version      = {0.1},
+  doi          = {10.5281/zenodo.5143773},
+  url          = {https://doi.org/10.5281/zenodo.5143773}
+}
+```
+```
+@inproceedings{Radford2021LearningTV,
+  title={Learning Transferable Visual Models From Natural Language Supervision},
+  author={Alec Radford and Jong Wook Kim and Chris Hallacy and A. Ramesh and Gabriel Goh and Sandhini Agarwal and Girish Sastry and Amanda Askell and Pamela Mishkin and Jack Clark and Gretchen Krueger and Ilya Sutskever},
+  booktitle={ICML},
+  year={2021}
 }
 ```
 
