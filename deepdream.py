@@ -196,9 +196,9 @@ if __name__ == "__main__":
 
     # Common params
     parser.add_argument("--input", type=str, help="Input IMAGE or VIDEO name that will be used for dreaming", default='figures.jpg')
-    parser.add_argument("--img_dimensions", nargs='+', type=int, help="Image width and optionally height, e.g. 300 or 300 400", default=None)
+    parser.add_argument("--img_dimensions", nargs='+', type=int, help="Resize input image to this width and optionally height, e.g. 300 or 300 400", default=None)
     parser.add_argument("--layers_to_use", type=str, nargs='+', help="Layer whose activations we should maximize while dreaming", default=['relu4_3'])
-    parser.add_argument("--text_prompt", type=str, help="Text prompt whose CLIP similaruty we should maximize while dreaming", default="Triangles")
+    parser.add_argument("--text_prompt", type=str, help="Text prompt whose CLIP similarity we should maximize while dreaming", default="Triangles")
     parser.add_argument("--model_name", choices=[m.name for m in SupportedModels],
                         help="Neural network (model) to use for dreaming", default=SupportedModels.VGG16_EXPERIMENTAL.name)
     parser.add_argument("--pretrained_weights", choices=[pw.name for pw in SupportedPretrainedWeights],

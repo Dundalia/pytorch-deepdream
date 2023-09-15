@@ -12,7 +12,7 @@ from utils.constants import *
 
 class ViT_large(torch.nn.Module):
     """Only those layers are exposed which have already proven to work nicely."""
-    def __init__(self, model_name = "ViT-L-16", pretrained_weights = None, requires_grad=False, show_progress=False):
+    def __init__(self, model_name = "ViT-L-16", pretrained_weights = SupportedPretrainedWeights.IMAGENET.name, requires_grad=False, show_progress=False):
         super().__init__()
 
         if pretrained_weights == SupportedPretrainedWeights.IMAGENET.name:

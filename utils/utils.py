@@ -13,14 +13,13 @@ import scipy.ndimage as nd
 
 from models.definitions.vggs import Vgg16, Vgg16Experimental
 from models.definitions.googlenet import GoogLeNet
-from models.definitions.resnets import ResNet50
+from models.definitions.resnets import ResNet, ResNet50Experimental
 from models.definitions.alexnet import AlexNet
 from models.definitions.convnext_base import ConvNeXt_base
 from models.definitions.convnext_large import ConvNeXt_large
 from models.definitions.convnext_xxlarge import ConvNeXt_XXlarge
 from models.definitions.vit_base import ViT_base
 from models.definitions.vit_large import ViT_large
-from models.definitions.resnet import ResNet
 from models.definitions.clip import CLIP
 from models.definitions.openclip import OpenCLIP
 from .constants import *
@@ -137,8 +136,8 @@ def fetch_and_prepare_model(model_type, pretrained_weights, device):
         model = Vgg16Experimental(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.GOOGLENET.name:
         model = GoogLeNet(pretrained_weights, requires_grad=False, show_progress=True).to(device)
-    elif model_type == SupportedModels.RESNET50.name:
-        model = ResNet50(pretrained_weights, requires_grad=False, show_progress=True).to(device)
+    elif model_type == SupportedModels.RESNET50_EXPERIMENTAL.name:
+        model = ResNet50Experimental(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.ALEXNET.name:
         model = AlexNet(pretrained_weights, requires_grad=False, show_progress=True).to(device)
     elif model_type == SupportedModels.RN50.name:
